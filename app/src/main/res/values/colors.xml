@@ -5,6 +5,9 @@
     <color name="primary_red_color">#FA5567</color>
     <color name="secondary_blue_color">#A1E2FF</color>
     <color name="third_purple_color">#CEBCEB</color>
+    <color name="primary_black">#000000</color>
+    <color name="primary_grey">#cccccc</color>
+    <color name="primary_white">#ffffff</color>
 
     <!-- Android Studio Base Colors  -->
     <color name="purple_200">#FFBB86FC</color>
