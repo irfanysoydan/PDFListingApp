@@ -3,7 +3,9 @@ package com.cbu.pdflistingapp.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class RetrofitModel {
+import java.io.Serializable;
+
+public class RetrofitModel implements Serializable {
     @SerializedName("_id")
     @Expose
     private String id;
