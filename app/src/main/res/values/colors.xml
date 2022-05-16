@@ -2,12 +2,13 @@
 <resources>
     <!-- Custom Colors -->
 
-    <color name="primary_red_color">#FA5567</color>
-    <color name="secondary_blue_color">#A1E2FF</color>
-    <color name="third_purple_color">#CEBCEB</color>
-    <color name="primary_black">#000000</color>
-    <color name="primary_grey">#cccccc</color>
-    <color name="primary_white">#ffffff</color>
+    <color name="primary_red_color">#FF2139</color>
+    <color name="primary_blue_color">#A1E2FF</color>
+    <color name="primary_purple_color">#CEBCEB</color>
+    <color name="primary_black_color">#000000</color>
+    <color name="primary_grey_color">#cccccc</color>
+    <color name="primary_shadow_color">#65CCCCCC</color>
+    <color name="primary_white_color">#ffffff</color>
 
     <!-- Android Studio Base Colors  -->
     <color name="purple_200">#FFBB86FC</color>

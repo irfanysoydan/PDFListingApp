@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/Work And School/AndroidStudioProjects/PDFListingApp/app/src/main/res/drawable-anydpi/ic_action_name.xml" value="0.3485" />
+        <entry key="..\:/Users/Work And School/AndroidStudioProjects/PDFListingApp/app/src/main/res/drawable/child_indicator_shadow.xml" value="0.3465" />
+        <entry key="..\:/Users/Work And School/AndroidStudioProjects/PDFListingApp/app/src/main/res/drawable/group_indicator_shadow.xml" value="0.3465" />
+        <entry key="..\:/Users/Work And School/AndroidStudioProjects/PDFListingApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3635" />
+        <entry key="..\:/Users/Work And School/AndroidStudioProjects/PDFListingApp/app/src/main/res/drawable/shadow.xml" value="0.3635" />
+        <entry key="..\:/Users/Work And School/AndroidStudioProjects/PDFListingApp/app/src/main/res/layout/activity_main.xml" value="0.3126177024482109" />
+        <entry key="..\:/Users/Work And School/AndroidStudioProjects/PDFListingApp/app/src/main/res/layout/child_indicator.xml" value="0.3625" />
+        <entry key="..\:/Users/Work And School/AndroidStudioProjects/PDFListingApp/app/src/main/res/layout/group_indicator.xml" value="0.33" />
+        <entry key="..\:/Users/Work And School/AndroidStudioProjects/PDFListingApp/app/src/main/res/layout/pdf_item.xml" value="0.3625" />
+        <entry key="..\:/Users/Work And School/AndroidStudioProjects/PDFListingApp/app/src/main/res/layout/toolbar.xml" value="0.33" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
