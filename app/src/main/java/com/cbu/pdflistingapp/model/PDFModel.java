@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class RetrofitModel implements Serializable {
+public class PDFModel implements Serializable {
     @SerializedName("_id")
     @Expose
     private String id;
