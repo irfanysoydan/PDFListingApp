@@ -23,12 +23,10 @@ public interface IPDFDataService {
     @GET("files/{id}")
     Call<PDFModel> getPDF(@Path("id") String id);
 
-    /*@Streaming
-    @GET("download/{id}")
-    Call<ResponseBody> downloadPDF(@Path("id") String id);*/
 
-    @GET
-    Call<ResponseBody> downloadPDF(@Url String fileUrl);
+
+    @GET("files/download/{id}")
+    Call<ResponseBody> downloadPDF(@Path("id") String fileUrl);
 
     @FormUrlEncoded
     @POST("files")

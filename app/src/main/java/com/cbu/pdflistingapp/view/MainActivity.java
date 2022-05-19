@@ -1,9 +1,13 @@
 package com.cbu.pdflistingapp.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,7 +25,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import okhttp3.ResponseBody;
+
 public class MainActivity extends AppCompatActivity {
+    private static final int MY_PERMISSIONS_REQUEST = 100;
     private ActivityMainBinding viewBinding;
     private MainViewModel mainViewModel;
     private HashMap<String, List<PDFModel>> pdfModelList;
@@ -36,8 +43,18 @@ public class MainActivity extends AppCompatActivity {
         viewBinding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = viewBinding.getRoot();
         setContentView(view);
+
+        if(ContextCompat.checkSelfPermission(MainActivity.this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    MY_PERMISSIONS_REQUEST);
+        }
+
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         getALLPDF();
+        getDownloadPDF("62852258a19ab5c75191f772");
 
 
     }
@@ -70,6 +87,11 @@ public class MainActivity extends AppCompatActivity {
             pdfModelList = pdfModels;
             setExpandableListView();
             expandableListViewListeners();
+        });
+   }
+
+   private void getDownloadPDF(String id){
+        mainViewModel.downloadPDF(id).observe(this, responseBody -> {
         });
    }
 }

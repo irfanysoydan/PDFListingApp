@@ -12,6 +12,9 @@ import com.cbu.pdflistingapp.network.concrete.repositories.PDFRepository;
 import java.util.HashMap;
 import java.util.List;
 
+import okhttp3.Response;
+import okhttp3.ResponseBody;
+
 public class MainViewModel  extends AndroidViewModel {
     private PDFRepository pdfRepository;
 
@@ -34,6 +37,10 @@ public class MainViewModel  extends AndroidViewModel {
 
     public LiveData<PDFModel> deletePDF(String id) {
         return pdfRepository.deletePDFMutableLiveData(id);
+    }
+
+    public LiveData<ResponseBody> downloadPDF(String id) {
+        return  pdfRepository.downloadPDFMutableLiveData(id);
     }
 
 }
