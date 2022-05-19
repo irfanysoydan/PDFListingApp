@@ -5,6 +5,7 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.cbu.pdflistingapp.model.PDFModel;
 import com.cbu.pdflistingapp.network.concrete.repositories.PDFRepository;
@@ -23,7 +24,7 @@ public class MainViewModel  extends AndroidViewModel {
         this.pdfRepository = new PDFRepository(application);
     }
 
-    public LiveData<HashMap<String,List<PDFModel>>> getAllPDF() {
+    public LiveData<HashMap<String,List<PDFModel>>> getAllGroupedPDFs() {
         return pdfRepository.getAllPDFMutableLiveData();
     }
 

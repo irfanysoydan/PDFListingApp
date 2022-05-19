@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">PDFListingApp</string>
+    <string name="download">Download</string>
+    <string name="detail">Details</string>
+    <string name="delete">Delete</string>
 </resources>

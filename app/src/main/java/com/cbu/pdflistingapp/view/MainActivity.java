@@ -10,9 +10,13 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.cbu.pdflistingapp.R;
@@ -36,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
     private ExpandableListView expandableListView;
     private ExpandableListAdapter expandableListAdapter;
     private List<String> expandableTitleList;
-    private HashMap<String, List<String>> expandableDetailList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,8 +56,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
-        getALLPDF();
-        getDownloadPDF("62852258a19ab5c75191f772");
+       fillExpandableListView();
+
 
 
     }
@@ -72,18 +75,52 @@ public class MainActivity extends AppCompatActivity {
        // This method is called when the group is collapsed
        expandableListView.setOnGroupCollapseListener(groupPosition -> Toast.makeText(getApplicationContext(), expandableTitleList.get(groupPosition) + " List Collapsed.", Toast.LENGTH_SHORT).show());
        expandableListView.setOnChildClickListener((parent, v, groupPosition, childPosition, id) -> {
-           Toast.makeText(getApplicationContext(), expandableTitleList.get(groupPosition)
-                   + " -> "
-                   + expandableDetailList.get(
-                   expandableTitleList.get(groupPosition)).get(
-                   childPosition), Toast.LENGTH_SHORT
-           ).show();
            return false;
        });
+       expandableListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+           @Override
+           public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+               final ExpandableListAdapter adapter = ((ExpandableListView) parent).getExpandableListAdapter();
+               long packedPos = ((ExpandableListView) parent).getExpandableListPosition(position);
+               int groupPosition = ExpandableListView.getPackedPositionGroup(packedPos);
+               int childPosition = ExpandableListView.getPackedPositionChild(packedPos);
+               Log.e("TAG", "onMenuItemClick: "+groupPosition);
+               Log.e("TAG", "onMenuItemClick: "+parent.getItemAtPosition(childPosition));
+               if (ExpandableListView.getPackedPositionType(id) == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
+                   PopupMenu popup = new PopupMenu(MainActivity.this, view);
+                   MenuInflater inflater = popup.getMenuInflater();
+                   inflater.inflate(R.menu.detail_menu, popup.getMenu());
+                   popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                       @Override
+                       public boolean onMenuItemClick(MenuItem menuItem) {
+                           switch (menuItem.getItemId()) {
+                               case R.id.menu_download:
+
+                                   return true;
+                               case R.id.menu_delete:
+
+                                   return true;
+                               case R.id.menu_detail:
+
+                                   return true;
+                               default:
+                                   return false;
+                           }
+                       }
+                   });
+                   popup.show();
+                   return true;
+               }
+
+               return false;
+           }
+       });
+
+
    }
 
-   private void getALLPDF(){
-        mainViewModel.getAllPDF().observe(this, pdfModels -> {
+   private void fillExpandableListView(){
+        mainViewModel.getAllGroupedPDFs().observe(this, pdfModels -> {
             pdfModelList = pdfModels;
             setExpandableListView();
             expandableListViewListeners();

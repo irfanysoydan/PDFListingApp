@@ -10,6 +10,7 @@ public class RetrofitInstance {
 
     private static Retrofit retrofit;
     private static final String BASE_URL = "https://evening-springs-47729.herokuapp.com/";
+    //private static final String BASE_URL = "http://192.168.43.50:5000/";
 
     public static Retrofit getRetrofitInstance() {
         Gson gson = new GsonBuilder()

@@ -1,18 +1,19 @@
 package com.cbu.pdflistingapp.network.concrete.repositories;
 
 import android.app.Application;
+import android.os.Build;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 
 import com.cbu.pdflistingapp.model.PDFModel;
 import com.cbu.pdflistingapp.network.concrete.RetrofitInstance;
 import com.cbu.pdflistingapp.network.interfaces.IPDFDataService;
-import com.cbu.pdflistingapp.view.MainActivity;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -20,9 +21,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.ResponseBody;
-import okhttp3.internal.http2.Header;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -33,8 +34,7 @@ public class PDFRepository {
     private MutableLiveData<ResponseBody> mutableResponseBodyLiveData = new MutableLiveData<>();
     private MutableLiveData<PDFModel> mutablePDFLiveData = new MutableLiveData<>();
     private Application application;
-    private IPDFDataService pdfDataService;
-    private String pdfName;
+
 
     public PDFRepository(Application application) {
         this.application = application;
@@ -46,20 +46,22 @@ public class PDFRepository {
         call.enqueue(new Callback<List<PDFModel>>() {
             @Override
             public void onResponse(Call<List<PDFModel>> call, Response<List<PDFModel>> response) {
-                HashMap<String,List<PDFModel>> groupList = new HashMap<>();
                 List<PDFModel> pdfModelList = response.body();
-                groupList.put("A",pdfModelList);
-                List<PDFModel> pdfModelList1 = response.body();
-                groupList.put("B",pdfModelList1);
-                List<PDFModel> pdfModelList2 = response.body();
-                groupList.put("C",pdfModelList2);
-                List<PDFModel> pdfModelList3 = response.body();
-                groupList.put("D",pdfModelList3);
                 if (pdfModelList != null) {
-                    mutablePDFListLiveData.setValue(groupList);
+                    Map<String,List<PDFModel>> listMap = new HashMap<>();
+                    for (PDFModel model:pdfModelList ) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            String pattern = "dd MMMM yyyy";
+                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+                            String date = simpleDateFormat.format(model.getCratedAt());
+                            listMap.computeIfAbsent(date.toString(),k -> new ArrayList<>()).add(model);
+                            Log.e(TAG, "onResponse: "+date);
+                        }
+                    }
+                    mutablePDFListLiveData.setValue((HashMap<String, List<PDFModel>>) listMap);
                 }
-            }
 
+            }
             @Override
             public void onFailure(Call<List<PDFModel>> call, Throwable t) {
                 Log.e(TAG, "onFailure: ",t);
@@ -130,7 +132,7 @@ public class PDFRepository {
 
     public MutableLiveData<ResponseBody> downloadPDFMutableLiveData(String id){
 
-        pdfDataService = RetrofitInstance.getRetrofitInstance().create(IPDFDataService.class);
+        IPDFDataService pdfDataService = RetrofitInstance.getRetrofitInstance().create(IPDFDataService.class);
         Call<ResponseBody> call = pdfDataService.downloadPDF(id);
         call.enqueue(new Callback<ResponseBody>() {
             @Override

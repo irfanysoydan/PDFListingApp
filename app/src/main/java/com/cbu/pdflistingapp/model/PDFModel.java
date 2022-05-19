@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class PDFModel implements Serializable {
     @SerializedName("_id")
@@ -24,11 +25,11 @@ public class PDFModel implements Serializable {
 
     @SerializedName("createdAt")
     @Expose
-    private String cratedAt;
+    private Date cratedAt;
 
     @SerializedName("updatedAt")
     @Expose
-    private String updatedAt;
+    private Date updatedAt;
 
     public String getId() {
         return id;
@@ -62,19 +63,19 @@ public class PDFModel implements Serializable {
         this.size = size;
     }
 
-    public String getCratedAt() {
+    public Date getCratedAt() {
         return cratedAt;
     }
 
-    public void setCratedAt(String cratedAt) {
+    public void setCratedAt(Date cratedAt) {
         this.cratedAt = cratedAt;
     }
 
-    public String getUpdatedAt() {
+    public Date getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(String updatedAt) {
+    public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
 }
