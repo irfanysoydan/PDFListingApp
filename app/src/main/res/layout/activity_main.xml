@@ -6,28 +6,48 @@
     android:layout_height="match_parent"
     tools:context=".view.MainActivity"
     android:orientation="vertical"
+    android:weightSum="3"
     >
 
     <include
         android:id="@+id/toolbar"
-        layout="@layout/toolbar" />
-    <ScrollView
-        android:id="@+id/scroll"
+        layout="@layout/toolbar"
+        />
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginHorizontal="37dp"
-        android:layout_marginTop="46dp"
-        android:fillViewport="true"
+        android:layout_height="wrap_content"
+        android:layout_weight="2.9"
         >
-
-        <ExpandableListView
-            android:id="@+id/main_expandable_list_view"
+        <ScrollView
+            android:id="@+id/scroll"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:divider="@android:color/transparent"
-            android:childDivider="@android:color/transparent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="37dp"
+            android:layout_marginTop="46dp"
+            android:fillViewport="true"
             >
 
-        </ExpandableListView>
-    </ScrollView>
+            <ExpandableListView
+                android:id="@+id/main_expandable_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@android:color/transparent"
+                android:childDivider="@android:color/transparent"
+                >
+            </ExpandableListView>
+        </ScrollView>
+    </LinearLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_weight="0.1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        app:backgroundTint="@color/primary_red_color"
+        app:fabSize="normal"
+        app:tint="@color/white"
+        android:src="@drawable/ic_baseline_add_24"
+        app:rippleColor="@color/white"
+        android:contentDescription="test"
+        android:layout_margin="16dp" />
 </LinearLayout>
