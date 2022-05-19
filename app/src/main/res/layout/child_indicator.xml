@@ -9,18 +9,21 @@
     android:paddingVertical="5dp"
     android:minHeight="48dp"
     android:gravity="center_vertical"
+    android:weightSum="1"
     >
 
     <TextView
         android:id="@+id/main_expandable_list_view_chlid_indicator_TV_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ellipsize="none"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:fontFamily="@font/lexend_medium"
         android:text="@string/app_name"
         android:textColor="@color/white"
         android:textSize="16sp"
-        android:layout_weight="0.6"/>
+        android:layout_weight="0.6"
+        android:maxWidth="150dp"/>
     <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

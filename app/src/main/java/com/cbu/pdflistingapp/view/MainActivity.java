@@ -71,52 +71,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
    private void expandableListViewListeners(){
-       expandableListView.setOnGroupExpandListener(groupPosition -> Toast.makeText(getApplicationContext(), expandableTitleList.get(groupPosition) + " List Expanded.", Toast.LENGTH_SHORT).show());
-       // This method is called when the group is collapsed
-       expandableListView.setOnGroupCollapseListener(groupPosition -> Toast.makeText(getApplicationContext(), expandableTitleList.get(groupPosition) + " List Collapsed.", Toast.LENGTH_SHORT).show());
-       expandableListView.setOnChildClickListener((parent, v, groupPosition, childPosition, id) -> {
+       expandableListView.setOnItemLongClickListener((parent, view, position, id) -> {
+           PDFModel model = (PDFModel) parent.getItemAtPosition(position);
+           if (ExpandableListView.getPackedPositionType(id) == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
+               PopupMenu popup = new PopupMenu(MainActivity.this, view);
+               MenuInflater inflater = popup.getMenuInflater();
+               inflater.inflate(R.menu.detail_menu, popup.getMenu());
+               popup.setOnMenuItemClickListener(menuItem -> {
+                   switch (menuItem.getItemId()) {
+                       case R.id.menu_download:
+                           downloadPDF(model.getId());
+                           return true;
+                       case R.id.menu_delete:
+                           deletePDF(model.getId());
+                           return true;
+                       case R.id.menu_detail:
+                           return true;
+                       default:
+                           return false;
+                   }
+               });
+               popup.show();
+               return true;
+           }
            return false;
        });
-       expandableListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-           @Override
-           public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-               final ExpandableListAdapter adapter = ((ExpandableListView) parent).getExpandableListAdapter();
-               long packedPos = ((ExpandableListView) parent).getExpandableListPosition(position);
-               int groupPosition = ExpandableListView.getPackedPositionGroup(packedPos);
-               int childPosition = ExpandableListView.getPackedPositionChild(packedPos);
-               Log.e("TAG", "onMenuItemClick: "+groupPosition);
-               Log.e("TAG", "onMenuItemClick: "+parent.getItemAtPosition(childPosition));
-               if (ExpandableListView.getPackedPositionType(id) == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
-                   PopupMenu popup = new PopupMenu(MainActivity.this, view);
-                   MenuInflater inflater = popup.getMenuInflater();
-                   inflater.inflate(R.menu.detail_menu, popup.getMenu());
-                   popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                       @Override
-                       public boolean onMenuItemClick(MenuItem menuItem) {
-                           switch (menuItem.getItemId()) {
-                               case R.id.menu_download:
-
-                                   return true;
-                               case R.id.menu_delete:
-
-                                   return true;
-                               case R.id.menu_detail:
-
-                                   return true;
-                               default:
-                                   return false;
-                           }
-                       }
-                   });
-                   popup.show();
-                   return true;
-               }
-
-               return false;
-           }
-       });
-
-
    }
 
    private void fillExpandableListView(){
@@ -127,8 +106,15 @@ public class MainActivity extends AppCompatActivity {
         });
    }
 
-   private void getDownloadPDF(String id){
+   private void downloadPDF(String id){
         mainViewModel.downloadPDF(id).observe(this, responseBody -> {
+        });
+   }
+
+   private void deletePDF(String id){
+        mainViewModel.deletePDF(id).observe(this, model -> {
+            Toast.makeText(MainActivity.this,model.getName()+" Was deleted",Toast.LENGTH_LONG).show();
+            fillExpandableListView();
         });
    }
 }

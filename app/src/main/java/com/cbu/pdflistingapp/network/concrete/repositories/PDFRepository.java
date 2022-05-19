@@ -137,7 +137,6 @@ public class PDFRepository {
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, final Response<ResponseBody> response) {
-
                 if(response.isSuccessful()){
                     new AsyncTask<Void, Void, Void>() {
                         @Override
@@ -152,15 +151,11 @@ public class PDFRepository {
                 else{
                     Log.e(TAG, "Server Contact Failed" );
                 }
-
-
             }
-
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.e("asd","Downloaded failed");
-
             }
         });
         return mutableResponseBodyLiveData;

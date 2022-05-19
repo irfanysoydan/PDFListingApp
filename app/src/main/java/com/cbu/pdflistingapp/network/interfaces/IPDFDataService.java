@@ -23,15 +23,12 @@ public interface IPDFDataService {
     @GET("files/{id}")
     Call<PDFModel> getPDF(@Path("id") String id);
 
-
-
     @GET("files/download/{id}")
     Call<ResponseBody> downloadPDF(@Path("id") String fileUrl);
 
     @FormUrlEncoded
     @POST("files")
     Call<PDFModel> createPDF(@Body PDFModel model);
-
 
     @DELETE("files/{id}")
     Call<PDFModel> deletePDF(@Path("id") String id);
