@@ -52,8 +52,6 @@ public class MainActivity extends AppCompatActivity {
         checkSelfPermission();
         fillExpandableListView();
         floatingButtonListeners();
-
-
     }
 
     private void checkSelfPermission(){
@@ -116,12 +114,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void deletePDF(String id) {
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this,R.style.AlertDialogTheme);
         alertBuilder.setMessage("Are you sure you really want to delete the this PDF file?");
         alertBuilder.setCancelable(true);
         alertBuilder.setPositiveButton("Yes, I'm sure.",(dialog, i) -> {
             mainViewModel.deletePDF(id).observe(this, model -> {
-                Toast.makeText(MainActivity.this, model.getName() + " Was deleted", Toast.LENGTH_LONG).show();
                 fillExpandableListView();
             });
             dialog.cancel();
