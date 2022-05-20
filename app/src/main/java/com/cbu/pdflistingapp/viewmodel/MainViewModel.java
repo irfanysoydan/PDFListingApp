@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.cbu.pdflistingapp.model.PDFModel;
 import com.cbu.pdflistingapp.network.concrete.repositories.PDFRepository;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 
@@ -32,8 +33,8 @@ public class MainViewModel  extends AndroidViewModel {
         return pdfRepository.getByIdPDFMutableLiveData(id);
     }
 
-    public LiveData<PDFModel> createPDF(PDFModel model) {
-        return pdfRepository.createPDFMutableLiveData(model);
+    public LiveData<PDFModel> uploadPDF(File file) {
+        return pdfRepository.createPDFMutableLiveData(file);
     }
 
     public LiveData<PDFModel> deletePDF(String id) {

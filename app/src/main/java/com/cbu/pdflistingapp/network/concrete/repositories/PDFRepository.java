@@ -23,6 +23,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,7 +37,6 @@ public class PDFRepository {
     private MutableLiveData<ResponseBody> mutableResponseBodyLiveData = new MutableLiveData<>();
     private MutableLiveData<PDFModel> mutablePDFLiveData = new MutableLiveData<>();
     private Application application;
-
 
     public PDFRepository(Application application) {
         this.application = application;
@@ -90,9 +92,12 @@ public class PDFRepository {
         return mutablePDFLiveData;
     }
 
-    public MutableLiveData<PDFModel> createPDFMutableLiveData(PDFModel model) {
+    public MutableLiveData<PDFModel> createPDFMutableLiveData(File file) {
+        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/from-data"),file);
         IPDFDataService pdfDataService = RetrofitInstance.getRetrofitInstance().create(IPDFDataService.class);
-        Call<PDFModel> call = pdfDataService.createPDF(model);
+        MultipartBody.Part requestFilePart = MultipartBody.Part.createFormData("dataFile",file.getName(),requestFile);
+        Call<PDFModel> call = pdfDataService.createPDF(requestFilePart);
+
         call.enqueue(new Callback<PDFModel>() {
             @Override
             public void onResponse(Call<PDFModel> call, Response<PDFModel> response) {
@@ -104,7 +109,7 @@ public class PDFRepository {
 
             @Override
             public void onFailure(Call<PDFModel> call, Throwable t) {
-                Log.e(TAG, "onFailure: ",t);
+                Log.e(TAG, "createPDFTESTMutableLiveData onFailure: ",t);
             }
         });
         return mutablePDFLiveData;
